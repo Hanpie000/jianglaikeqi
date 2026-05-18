@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荧光乳液的应用 - 姜计就计</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        /* 固定导航栏（完全复用原有样式） */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        .logo img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: all 0.5s ease;
+            position: relative;
+            padding-bottom: 3px;
+        }
+        .nav-links a:hover {
+            color: #00a8ff;
+        }
+        .nav-links a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #00a8ff;
+            transition: width 0.5s ease;
+        }
+        .nav-links a.active {
+            color: #00a8ff;
+            border-bottom: 2px solid #00a8ff;
+            padding-bottom: 3px;
+        }
+        .lang-select {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* 核心内容区域样式 */
+        .content-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        /* 大标题样式 */
+        .main-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ff4444;
+            padding-bottom: 10px;
+        }
+        /* 小标题+内容样式 */
+        .sub-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 25px;
+        }
+        .sub-content h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .sub-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* 页脚样式（完全复用原有样式） */
+        .footer {
+            background: #444;
+            color: #fff;
+            padding: 50px 20px;
+            margin-top: 50px;
+        }
+        .footer-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .footer-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #666;
+        }
+        .footer-contact p {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-contact i {
+            font-size: 18px;
+        }
+        .footer-cat li {
+            list-style: none;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .footer-cat li::before {
+            content: '>';
+            color: #fff;
+        }
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #666;
+        }
+        .footer-search {
+            display: flex;
+        }
+        .footer-search input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            outline: none;
+        }
+        .footer-search button {
+            padding: 8px 16px;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #666;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        /* 立即咨询悬浮按钮（复用） */
+        .float-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00cc66;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            z-index: 998;
+        }
+    </style>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏（完全复用） -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="LJKQ Logo" style="height: 40px; width: auto; object-fit: contain;">
+        </div>
+        <div class="nav-links">
+            <a href="3.html" class="nav-link active">首页</a>
+            <a href="3.html" class="nav-link">产品</a>
+            <a href="buy.html" class="nav-link">购买</a>
+            <a href="3.html" class="nav-link">关于我们</a>
+            <a href="3.html" class="nav-link">联系我们</a>
+            <a href="3.html" class="nav-link">常见问题</a>
+            <a href="3.html" class="nav-link">文章</a>
+            <a href="3.html" class="nav-link">新闻</a>
+        </div>
+        <select class="lang-select" id="languageSelect">
+            <option>Select Language</option>
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+        </select>
+    </nav>
+
+    <!-- 核心内容区域 -->
+    <div class="content-section">
+        <!-- 大标题 -->
+        <h1 class="main-title">姜黄锁鲜保鲜膜的应用</h1>
+        
+        <!-- 小标题+内容 -->
+        <div class="sub-content">
+            <h3>1.在食品保鲜与公共安全领域的应用</h3>
+            <p>姜黄锁鲜保鲜膜在食品保鲜与公共安全领域发挥关键作用。可广泛应用于生鲜食材、预制菜品、冷链食品的密封保鲜包装，依托天然姜黄素长效抑菌特性，抑制细菌滋生、延缓食材腐败变质，延长货架保鲜周期，适配商超、食堂、食品加工厂等场景，筑牢食品安全第一道防线。</p>
+            <p>同时，该保鲜膜可用于食品溯源安全管控，贴合食品外包装后，凭借稳定材质适配运输、储存全流程，有效阻隔外界污染与篡改风险，快速核验食品真伪与新鲜存储状态，从源头规避过期、变质食品流通隐患，全面提升食品流通公共安全水平。</p>
+        </div>
+
+        <div class="sub-content">
+            <h3>2.在农业与生鲜储运监测领域的应用</h3>
+            <p>姜黄锁鲜保鲜膜在农业生鲜储运防护中极具实用价值。可直接用于果蔬、肉类、水产等农产品采收后的包裹密封，既能锁住食材水分、防止风干萎蔫，又能隔绝霉菌、大肠杆菌等有害微生物，适配田间暂存、长途冷链、进出口生鲜转运等场景，减少储运损耗。</p>
+            <p>此外，该保鲜膜可适配生鲜仓储环境防护，耐受低温高湿储运工况，不易破损脱落，持续稳定发挥抑菌锁鲜功效，精准保障生鲜储运全程品质稳定，助力农业生鲜降损增效、规范品质管控。</p>
+        </div>
+        
+        <div class="sub-content">
+            <h3>3.在生物医药与无菌防护领域的应用</h3>
+            <p>姜黄锁鲜保鲜膜在生物医药无菌防护场景应用前景广阔。可用于医用无菌耗材、简易创面防护辅料外层包裹密封，依托天然抑菌、安全无毒、无刺激性特性，阻隔外界杂菌侵入，维持局部洁净无菌环境，降低创面感染概率。</p>
+            <p>同时适配实验室生物样本、无菌试剂的短期密封保存，隔绝水汽、粉尘与微生物污染，兼容常规常温及低温存储条件，材质温和无有害析出，不干扰生物样本活性，有效提升生物医药耗材与样本存储安全稳定性。</p>
+        </div>
+
+        <div class="sub-content">
+            <h3>4.在工业包装与品质防护领域的应用</h3>
+            <p>姜黄锁鲜保鲜膜在工业轻量化包装与品质防护中优势显著。可用于轻工业精密配件、防潮易腐工业品、食品级耗材的外层缠绕包裹，既能防尘防潮、阻隔氧化锈蚀，又能凭借抑菌特性避免长期存放滋生霉菌污染产品。</p>
+            <p>还可适配小型工业成品出厂封装防护，材质柔韧易贴合、无残留易剥离，兼顾密封锁护与便捷拆装需求，快速辅助核验包装完整性，提升工业轻量化包装品质与出厂良品率，适配多品类轻工业防护场景。</p>
+        </div>
+
+        <div class="sub-content">
+            <h3>5.环保与可持续性</h3>
+            <p>姜黄锁鲜保鲜膜以天然姜黄素为核心功能抑菌成分，自带完全生物降解、无有毒助剂添加的核心优势，从源头规避传统化工保鲜膜难降解、微塑料残留污染生态的痛点。水性工艺制备无毒无异味，生产与使用全程安全环保，高度契合全球绿色包装、低碳减塑的发展刚需。</p>
+            <p>依托上述特性，该保鲜膜在可持续领域潜力突出：在绿色食品包装领域，可替代传统 PE 化工保鲜膜，用完自然降解无残留，适配生鲜零售、家庭日常使用，兼顾锁鲜安全与生态保护；在绿色农业生态领域，可用于田间生鲜暂存包裹，废弃后就地降解不污染土壤水源。此外，在环保餐饮、可降解耗材等行业，其天然安全、易降解属性可助力产业减塑升级，赋能多领域绿色可持续高质量发展。</p>
+        </div>
+    </div>
+
+    <!-- 悬浮咨询按钮 -->
+    <button class="float-btn">立即咨询</button>
+
+    <!-- 页脚（完全复用） -->
+    <footer class="footer">
+        <div class="footer-wrap">
+            <div class="footer-contact">
+                <h3 class="footer-title">联系我们</h3>
+                <p><i class="fas fa-map-marker-alt"></i> <span>广州总部地址：中国广东省广州市番禺区广州大学</span></p>
+                <p><i class="fas fa-phone"></i> <span>+0086-0769-81912340</span></p>
+                <p><i class="fas fa-mobile-alt"></i> <span>0086 159 1431 5366</span></p>
+                <p><i class="fas fa-envelope"></i> <span>export@cfp-tstar.com</span></p>
+                <p><i class="fab fa-weixin"></i> <span>0086 159 1431 5366</span></p>
+                <p><i class="fab fa-whatsapp"></i> <span>0086 159 1431 5366</span></p>
+            </div>
+            <div class="footer-cat">
+                <h3 class="footer-title">产品分类</h3>
+                <ul>
+                    <li>姜黄锁鲜保鲜膜</li>
+                    <li>应用</li>
+                </ul>
+            </div>
+            <div class="footer-follow">
+                <h3 class="footer-title">关注我们</h3>
+                <div class="footer-social">
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                </div>
+                <div class="footer-search">
+                    <input type="text" placeholder="搜索...">
+                    <button><i class="fas fa-search">/</i></button>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            姜计就计©版权所有 2026
+        </div>
+    </footer>
+</body>
+</html>
