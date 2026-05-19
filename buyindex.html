@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姜计就计 - 购买</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        /* 替换后的导航栏样式（与总页面一致） */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        .logo span {
+            color: #ff0000;
+        }
+        .logo .blue {
+            color: #00a8ff;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: all 0.5s ease;
+            position: relative;
+            padding-bottom: 3px;
+        }
+        .nav-links a:hover {
+            color: #00a8ff;
+        }
+        .nav-links a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #00a8ff;
+            transition: width 0.5s ease;
+        }
+        .nav-links a.active {
+            color: #00a8ff;
+            border-bottom: 2px solid #00a8ff;
+            padding-bottom: 3px;
+        }
+        .lang-select {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        /* 轮播图 */
+        .banner {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+        }
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .banner-text {
+            position: absolute;
+            top: 70%;
+            left: 50px;
+            transform: translateY(-50%);
+            color: #fff;
+        }
+        .banner-text h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .banner-text p {
+            font-size: 18px;
+        }
+        /* 面包屑 */
+        .breadcrumb {
+            padding: 15px 50px;
+            background: #f5f5f5;
+            font-size: 14px;
+            color: #666;
+        }
+        .breadcrumb a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        /* 产品筛选 */
+        .product-filter {
+            padding: 20px 50px;
+            border-bottom: 1px solid #eee;
+        }
+        .filter-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .filter-title h2 {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .filter-title span {
+            font-size: 14px;
+            color: #666;
+        }
+        .filter-title a {
+            margin-left: auto;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 14px;
+        }
+        .filter-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .filter-item label {
+            font-size: 14px;
+            color: #333;
+            margin-right: 10px;
+        }
+        .filter-item a {
+            text-decoration: none;
+            color: #333;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+        .filter-item a:hover {
+            color: #007bff;
+        }
+        .filter-item .more {
+            margin-left: auto;
+            border: 1px solid #ddd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+        }
+        .filter-sort {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .filter-sort a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            padding: 5px 0;
+        }
+        .filter-sort a.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+        .price-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .price-input input {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+        /* 产品列表 */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 30px 50px;
+        }
+        .product-item {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+        }
+        .product-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .product-item h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .product-item p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .product-item a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 14px;
+            border: 1px solid #007bff;
+            padding: 6px 15px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .product-item a:hover {
+            background: #007bff;
+            color: #fff;
+        }
+        /* 替换后的页脚样式（与总页面一致） */
+        .footer {
+            background: #444;
+            color: #fff;
+            padding: 50px 20px;
+        }
+        .footer-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .footer-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #666;
+        }
+        .footer-contact p {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-contact i {
+            font-size: 18px;
+        }
+        .footer-cat li {
+            list-style: none;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .footer-cat li::before {
+            content: '>';
+            color: #fff;
+        }
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #666;
+        }
+        .footer-search {
+            display: flex;
+        }
+        .footer-search input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            outline: none;
+        }
+        .footer-search button {
+            padding: 8px 16px;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #666;
+            font-size: 14px;
+            color: #ccc;
+        }
+        /* 悬浮咨询按钮（与总页面一致） */
+        .float-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00cc66;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        /* 引入图标库样式兼容 */
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+    </style>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 替换后的导航栏（与总页面一致） -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="LJKQ Logo" style="height: 40px; width: auto; object-fit: contain;">
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link" data-page="home" data-lang="nav.home">首页</a>
+            <a href="index.html" class="nav-link" data-page="product" data-lang="nav.products">产品</a>
+            <a href="#" class="nav-link active" data-page="buy" data-lang="nav.buy">购买</a>
+            <a href="index.html" class="nav-link" data-page="about" data-lang="nav.about">关于我们</a>
+            <a href="index.html" class="nav-link" data-page="contact" data-lang="nav.contact">联系我们</a>
+            <a href="index.html" class="nav-link" data-page="faq" data-lang="nav.faq">常见问题</a>
+            <a href="index.html" class="nav-link" data-page="articles" data-lang="nav.articles">文章</a>
+            <a href="index.html" class="nav-link" data-page="news" data-lang="nav.news">新闻</a>
+        </div>
+        <select class="lang-select" id="languageSelect">
+            <option>Select Language</option>
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+        </select>
+    </nav>
+
+    <!-- 原有核心内容保留 -->
+    <!-- 轮播图 -->
+    <div class="banner">
+        <img src="轮播.png" alt="banner" style="height: 600px; width: 100%;">
+        <div class="banner-text">
+            <h1>智慧科技 服务企业全场景</h1>
+            <p>品质优选 专注企业用户</p>
+        </div>
+    </div>
+
+    <!-- 面包屑 -->
+    <div class="breadcrumb">
+        <a href="#">首页</a> > 产品
+    </div>
+
+    <!-- 产品筛选 -->
+    <div class="product-filter">
+        <div class="filter-title">
+            <h2>产品</h2>
+            <span id="product-count">共2个产品</span>
+            <a href="#">解决方案 ></a>
+        </div>
+        <div class="filter-item">
+            <label>品牌：</label>
+            <a href="#">姜计就计</a>
+            <!-- <a href="#">卡萨帝</a> -->
+            <!-- <div class="more">多选 +</div> -->
+        </div>
+        <!-- <div class="filter-item">
+            <label>分类：</label>
+            <a href="#">家用空调</a>
+            <a href="#">商用空调</a>
+            <a href="#">冰箱</a>
+            <a href="#">商用显示</a>
+            <a href="#">热水器</a>
+            <a href="#">净水器</a>
+            <a href="#">小家电</a>
+            <div class="more">多选 +</div>
+        </div> -->
+        <div class="filter-sort">
+            <a href="#" class="active">综合</a>
+            <a href="#">人气</a>
+            <a href="#">价格</a>
+            <div class="price-input">
+                <input type="text" placeholder="最低价格">
+                <span>-</span>
+                <input type="text" placeholder="最高价格">
+            </div>
+        </div>
+    </div>
+
+    <!-- 产品列表（改为空容器，由JS动态生成） -->
+    <div class="product-list" id="product-list-container">
+        <!-- 产品内容将由JavaScript动态生成 -->
+    </div>
+
+    <!-- 替换后的页脚（与总页面一致） -->
+    <footer class="footer">
+        <div class="footer-wrap">
+            <div class="footer-contact">
+                <h3 class="footer-title" data-lang="footer.contact">联系我们</h3>
+                <p><i class="fas fa-map-marker-alt"></i> <span data-lang="footer.address1">广州总部地址：中国广东省广州市番禺区广州大学</span></p>
+                <p><i class="fas fa-phone"></i> <span data-lang="footer.tel">+0086-0769-81912340</span></p>
+                <p><i class="fas fa-mobile-alt"></i> <span data-lang="footer.mobile">0086 159 1431 5366</span></p>
+                <p><i class="fas fa-envelope"></i> <span data-lang="footer.email">export@cfp-tstar.com</span></p>
+                <p><i class="fab fa-weixin"></i> <span data-lang="footer.wechat">0086 159 1431 5366</span></p>
+                <p><i class="fab fa-whatsapp"></i> <span data-lang="footer.whatsapp">0086 159 1431 5366</span></p>
+            </div>
+            <div class="footer-cat">
+                <h3 class="footer-title" data-lang="footer.productCat">产品分类</h3>
+                <ul>
+                    <li data-lang="footer.cat1">姜黄锁鲜保鲜膜产品</li>
+                    <li data-lang="footer.cat2">应用</li>
+                </ul>
+            </div>
+            <div class="footer-follow">
+                <h3 class="footer-title" data-lang="footer.follow">关注我们</h3>
+                <div class="footer-social">
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                </div>
+                <div class="footer-search">
+                    <input type="text" placeholder="搜索..." data-lang="footer.search">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="copyright" data-lang="footer.copyright">
+            姜计就计©版权所有 2026
+        </div>
+    </footer>
+
+    <!-- 悬浮咨询按钮（与总页面一致） -->
+    <button class="float-btn" data-lang="float.btn">立即咨询</button>
+
+    <!-- 导航栏、语言切换功能（与总页面一致） -->
+    <script>
+        // 回到页面顶层的函数
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // 1. 导航栏切换逻辑
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                scrollToTop();
+
+                // 购买按钮跳转
+                const targetPage = this.getAttribute('data-page');
+                if (targetPage === 'buy') {
+                    window.location.href = 'buy.html';
+                    return;
+                }
+
+                // 移除所有导航栏active
+                navLinks.forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // 语言包（与总页面一致）
+        const languagePacks = {
+            zh: {
+                nav: {
+                    home: "首页",
+                    products: "产品",
+                    buy: "购买",
+                    about: "关于我们",
+                    contact: "联系我们",
+                    faq: "常见问题",
+                    articles: "文章",
+                    news: "新闻"
+                },
+                footer: {
+                    contact: "联系我们",
+                    address1: "广州总部地址：中国广东省广州市番禺区广州大学",
+                    tel: "+0086-0769-81912340",
+                    mobile: "0086 159 1431 5366",
+                    email: "export@cfp-tstar.com",
+                    wechat: "0086 159 1431 5366",
+                    whatsapp: "0086 159 1431 5366",
+                    productCat: "产品分类",
+                    cat1: "姜黄锁鲜保鲜膜产品",
+                    cat2: "应用",
+                    follow: "关注我们",
+                    search: "搜索...",
+                    copyright: "姜计就计©版权所有 2026"
+                },
+                float: {
+                    btn: "立即咨询"
+                }
+            },
+            en: {
+                nav: {
+                    home: "Home",
+                    products: "Products",
+                    buy: "Buy",
+                    about: "About Us",
+                    contact: "Contact Us",
+                    faq: "FAQ",
+                    articles: "Articles",
+                    news: "News"
+                },
+                footer: {
+                    contact: "Contact Us",
+                    address1: "Guangzhou Headquarters: Guangzhou University, Panyu District, Guangzhou, Guangdong, China",
+                    tel: "+0086-0769-81912340",
+                    mobile: "0086 159 1431 5366",
+                    email: "export@cfp-tstar.com",
+                    wechat: "0086 159 1431 5366",
+                    whatsapp: "0086 159 1431 5366",
+                    productCat: "Product Categories",
+                    cat1: "Fluorescent Emulsion Products",
+                    cat2: "Application",
+                    follow: "Follow Us",
+                    search: "Search...",
+                    copyright: "Jianglai Keqi © All Rights Reserved 2026"
+                },
+                float: {
+                    btn: "Consult Now"
+                }
+            }
+        };
+
+        // 翻译函数
+        function translatePage(lang) {
+            const currentLangPack = languagePacks[lang];
+            if (!currentLangPack) return;
+
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                const langKey = element.getAttribute('data-lang');
+                const keyLevels = langKey.split('.');
+                let textValue = currentLangPack;
+
+                for (const key of keyLevels) {
+                    if (textValue && textValue.hasOwnProperty(key)) {
+                        textValue = textValue[key];
+                    } else {
+                        textValue = '';
+                        break;
+                    }
+                }
+
+                if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
+                    element.placeholder = textValue;
+                } else {
+                    element.innerHTML = textValue;
+                }
+            });
+        }
+
+        // 语言切换事件
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            const selectedLang = this.value;
+            translatePage(selectedLang);
+        });
+
+        // ========== 核心修改：根据用户类型动态渲染产品列表 ==========
+        function renderProductList() {
+            // 从localStorage获取用户类型
+            const userType = localStorage.getItem('userType');
+            // 产品数据配置
+            const productConfig = {
+                'personal': {
+                    count: 1,
+                    products: [{
+                        imgSrc: "家庭产品.png",
+                        imgAlt: "近姜一号——姜黄锁鲜保鲜膜",
+                        title: "近姜一号——姜黄锁鲜保鲜膜",
+                        sales: 1326
+                    }]
+                },
+                'enterprise': {
+                    count: 1,
+                    products: [{
+                        imgSrc: "企业产品.png",
+                        imgAlt: "远姜一号——姜黄锁鲜保鲜膜",
+                        title: "远姜一号——姜黄锁鲜保鲜膜",
+                        sales: 493
+                    }]
+                },
+                // 其他用户类型默认不显示产品
+                'default': {
+                    count: 0,
+                    products: []
+                }
+            };
+
+            // 获取产品列表容器和产品数量显示元素
+            const productContainer = document.getElementById('product-list-container');
+            const productCountElement = document.getElementById('product-count');
+            
+            // 清空容器
+            productContainer.innerHTML = '';
+
+            // 确定要渲染的产品配置
+            const config = productConfig[userType] || productConfig['default'];
+            
+            // 更新产品数量显示
+            productCountElement.textContent = `共${config.count}个产品`;
+
+            // 渲染产品
+            config.products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <img src="${product.imgSrc}" alt="${product.imgAlt}" style="height: 200px; width: auto;">
+                    <h3>${product.title}</h3>
+                    <p>已售：${product.sales} 件</p>
+                    <a href="index.html">查看详情</a>
+                `;
+                productContainer.appendChild(productItem);
+            });
+        }
+
+        // 页面加载时执行
+        window.addEventListener('DOMContentLoaded', function() {
+            translatePage('zh');
+            // 调用渲染产品列表函数
+            renderProductList();
+        });
+    </script>
+</body>
+</html>
